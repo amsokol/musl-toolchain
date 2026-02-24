@@ -138,14 +138,6 @@ _setup_darwin_steps = [
     },
 ]
 
-darwin_x86_64_runner = BaseRunner(
-    top_level_properties={
-        "runs-on": "macos-13",
-    },
-    build_setup_steps=_setup_darwin_steps,
-    test_setup_steps=[],
-)
-
 darwin_aarch64_runner = BaseRunner(
     top_level_properties={
         "runs-on": "macos-15",
@@ -884,7 +876,6 @@ def make_jobs(release, version):
     source_machines = [
         (OS.Linux, Architecture.X86_64, linux_x86_64_runner),
         (OS.Linux, Architecture.ARM64, linux_aarch64_runner),
-        (OS.MacOS, Architecture.X86_64, darwin_x86_64_runner),
         (OS.MacOS, Architecture.ARM64, darwin_aarch64_runner),
     ]
 

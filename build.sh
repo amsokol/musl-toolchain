@@ -54,6 +54,9 @@ git clone https://github.com/bazel-contrib/musl-cross-make.git "${working_direct
 cd "${working_directory}"
 git checkout 58e60ab120b4588e4094263709c3f0c3ef5b0a43
 
+# musl-cross-make only ships hashes up to 1.2.3; add 1.2.5 so the download step can verify it.
+echo "36210d3423172a40ddcf83c762207c5f760b60a6  musl-1.2.5.tar.gz" > hashes/musl-1.2.5.tar.gz.sha1
+
 # Be more resilient to https://git.savannah.gnu.org returning 50X errors.
 cat <<EOF >> config.mak
 DL_CMD = wget --retry-connrefused --retry-on-http-error=502,503,504 --waitretry=10 --tries=10 -c -O
