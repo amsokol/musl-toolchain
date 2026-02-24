@@ -545,5 +545,5 @@ musl_cc_toolchain_config = rule(
     attrs = {
         "target_arch": attr.string(mandatory = True, values = ["aarch64", "x86_64"]),
     },
-    provides = [CcToolchainConfigInfo],
+    provides = [CcToolchainConfigInfo] if CcToolchainConfigInfo else [],
 )

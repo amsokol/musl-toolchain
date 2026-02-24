@@ -186,7 +186,7 @@ def get_platform_sha256sum(os: OS):
 
 
 def musl_filename_without_extension(source_os: OS, source_arch: Architecture, target_arch: Architecture) -> str:
-    return f"musl-1.2.3-platform-{source_arch.for_musl}-{source_os.for_musl}-target-{target_arch.for_musl}-linux-musl"
+    return f"musl-1.2.5-platform-{source_arch.for_musl}-{source_os.for_musl}-target-{target_arch.for_musl}-linux-musl"
 
 
 def musl_toolchain_target_name(source_os: OS, source_arch: Architecture, target_arch: Architecture) -> str:
@@ -273,7 +273,7 @@ class ReleasableArtifact:
 
 
 def download_url_for(filename, version):
-    return f"https://github.com/bazel-contrib/musl-toolchain/releases/download/{version}/{filename}"
+    return f"https://github.com/amsokol/musl-toolchain/releases/download/{version}/{filename}"
 
 
 def generate_toolchain(
@@ -826,7 +826,7 @@ EOF
         # Keep the BCR tests at the end since they modify the files included in the release archive.
         {
             "name": "Run BCR tests",
-            "run": f"""sed -i "s|https://github.com/bazel-contrib/musl-toolchain/releases/download/{version}/|file://$(pwd)/|g" repositories.bzl
+            "run": f"""sed -i "s|https://github.com/amsokol/musl-toolchain/releases/download/{version}/|file://$(pwd)/|g" repositories.bzl
 cd bcr_test
 bazel test ...
 """,
