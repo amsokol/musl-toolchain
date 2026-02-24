@@ -62,6 +62,17 @@ cat <<EOF >> config.mak
 DL_CMD = wget --retry-connrefused --retry-on-http-error=502,503,504 --waitretry=10 --tries=10 -c -O
 EOF
 
+# Xcode 16.4+ ships a macOS SDK whose _stdio.h declares fdopen() as a function.
+# The old zlib bundled inside binutils/gcc #defines fdopen as a macro, which
+# clashes with that declaration and causes a compile error.  Using the system
+# zlib side-steps the issue entirely.
+if [[ "Linux" != "$(uname)" ]]; then
+    cat <<EOF >> config.mak
+BINUTILS_CONFIG += --with-system-zlib
+GCC_CONFIG += --with-system-zlib
+EOF
+fi
+
 # Linux uses a two-stage build in which the first stage builds a musl toolchain for the host using the host's compiler.
 # The second (and on macOS only) stage then builds the final toolchain using the stage1 toolchain. This is necessary to
 # avoid a glibc dependency of the final toolchain on Linux, as the host compiler is usually glibc-based.
